@@ -1,0 +1,9 @@
+[
+  {
+    "skillId": "s1",
+    "skillName": "Python",
+    "category": "Programming",
+    "importance": "High",
+    "requiredLevel": "Intermediate"
+  }
+]

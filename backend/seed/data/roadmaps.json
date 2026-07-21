@@ -1,0 +1,21 @@
+[
+  {
+    "roadmapId": "r1",
+    "jobRole": "Software Engineer",
+    "levels": [
+      {
+        "levelNumber": 1,
+        "levelName": "Basics",
+        "lessons": [
+          {
+            "lessonId": "l1",
+            "title": "Introduction to Programming",
+            "type": "video",
+            "xpReward": 50,
+            "isUnlocked": true
+          }
+        ]
+      }
+    ]
+  }
+]

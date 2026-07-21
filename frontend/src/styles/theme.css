@@ -1,0 +1,44 @@
+:root {
+  --bg-primary: #0A0A1A;
+  --bg-secondary: #0F0F2E;
+  --bg-card: #13132A;
+  --accent-primary: #7C3AED;
+  --accent-secondary: #9F67F7;
+  --accent-highlight: #A855F7;
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-color: #1E1B4B;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --live: #22C55E;
+}
+
+.glassmorphism {
+  backdrop-filter: blur(12px);
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.2);
+}
+
+.card-shadow {
+  box-shadow: 0 4px 24px rgba(124,58,237,0.12);
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(124,58,237,0.3);
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, #0A0A1A 0%, #1E1B4B 50%, #0A0A1A 100%);
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }

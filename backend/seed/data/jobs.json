@@ -1,0 +1,16 @@
+[
+  {
+    "jobId": "j1",
+    "companyId": null,
+    "companyName": "Zoho",
+    "jobRole": "Software Engineer",
+    "department": "Engineering",
+    "experienceRequired": "0-2 years",
+    "minimumCGPA": 7.0,
+    "competitiveCGPA": 8.0,
+    "salaryRange": "6-12 LPA",
+    "workMode": "Office",
+    "hiringDifficulty": "Moderate",
+    "jobDescription": "Build and maintain scalable web applications."
+  }
+]
