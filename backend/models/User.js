@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  googleId: String,
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true
+  },
+  email: { type: String, sparse: true },
+  password: { type: String },
   avatar: String,
   age: Number,
   college: String,
@@ -22,6 +29,7 @@ const userSchema = new mongoose.Schema({
   preferredLocation: String,
   careerInterests: [String],
   isProfileComplete: { type: Boolean, default: false },
+  onboardingCompleted: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

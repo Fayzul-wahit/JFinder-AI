@@ -62,7 +62,7 @@ const Navbar = ({ isAuthenticated, user, onLogout }) => {
         {isAuthenticated ? (
           <Button variant="ghost" onClick={onLogout}>Logout</Button>
         ) : (
-          <Link to="/auth"><Button variant="pill">Login</Button></Link>
+          <Link to="/login"><Button variant="pill">Login</Button></Link>
         )}
       </div>
     </nav>

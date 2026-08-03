@@ -7,7 +7,8 @@ import { useAuth } from './hooks/useAuth';
 
 // Pages
 import Landing from './pages/Landing';
-import Auth from './pages/Auth';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Onboarding from './pages/Onboarding';
 import Dashboard from './pages/Dashboard';
 import Roadmap from './pages/Roadmap';
@@ -41,7 +42,7 @@ const DashboardLayout = ({ children }) => (
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   if (loading) return <div>Loading...</div>;
-  if (!isAuthenticated) return <Navigate to="/auth" />;
+  if (!isAuthenticated) return <Navigate to="/login" />;
   return <DashboardLayout>{children}</DashboardLayout>;
 };
 
@@ -49,7 +50,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<PublicLayout><Landing /></PublicLayout>} />
-      <Route path="/auth" element={<PublicLayout><Auth /></PublicLayout>} />
+      <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+      <Route path="/signup" element={<PublicLayout><Signup /></PublicLayout>} />
       
       {/* Protected Routes */}
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />

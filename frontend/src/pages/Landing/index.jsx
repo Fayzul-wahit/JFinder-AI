@@ -114,7 +114,7 @@ const Landing = () => {
               <Button size="lg" variant="primary" onClick={scrollNews}>
                 Explore News &rarr;
               </Button>
-              <Button size="lg" variant="ghost" onClick={() => navigate('/auth')}>
+              <Button size="lg" variant="ghost" onClick={() => navigate('/signup')}>
                 &#9654; Get Started
               </Button>
             </div>

@@ -2,16 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-const passport = require('passport');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const { errorHandler } = require('./middleware/errorHandler');
 
 // Load config
 dotenv.config();
-
-// Passport config
-require('./config/passport');
 
 const app = express();
 
@@ -29,19 +24,6 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
-// Sessions
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
