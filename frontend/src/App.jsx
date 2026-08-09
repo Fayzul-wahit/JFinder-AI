@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { UserProvider } from './context/UserContext';
 import { Navbar, Sidebar, Footer } from './components/layout';
+import AIMentorFloat from './components/common/AIMentorFloat';
 import { useAuth } from './hooks/useAuth';
 
 // Pages
@@ -29,6 +30,7 @@ const PublicLayout = ({ children }) => (
   </div>
 );
 
+// DashboardLayout includes the floating AI Mentor on every authenticated page
 const DashboardLayout = ({ children }) => (
   <div style={{ display: 'flex', minHeight: '100vh' }}>
     <Sidebar />
@@ -36,6 +38,8 @@ const DashboardLayout = ({ children }) => (
       <Navbar isAuthenticated={true} />
       <main style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>{children}</main>
     </div>
+    {/* Floating AI Mentor — visible on ALL authenticated pages */}
+    <AIMentorFloat />
   </div>
 );
 
@@ -52,7 +56,7 @@ const AppRoutes = () => {
       <Route path="/" element={<PublicLayout><Landing /></PublicLayout>} />
       <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
       <Route path="/signup" element={<PublicLayout><Signup /></PublicLayout>} />
-      
+
       {/* Protected Routes */}
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -67,7 +71,7 @@ const AppRoutes = () => {
       <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-      
+
       <Route path="*" element={<PublicLayout><div style={{ textAlign: 'center', padding: '4rem' }}><h2>404 - Not Found</h2></div></PublicLayout>} />
     </Routes>
   );

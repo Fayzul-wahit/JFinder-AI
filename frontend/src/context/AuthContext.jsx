@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
     setIsAuthenticated(true);
     localStorage.setItem('auth', JSON.stringify({ user: userData }));
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
@@ -68,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     localStorage.removeItem('auth');
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
   return (

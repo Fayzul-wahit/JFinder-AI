@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Badge } from '../../components/common';
 import { useAuth } from '../../hooks/useAuth';
-import { getCRS, getSkillGap, getRecommendations } from '../../services/api';
+import { getSkillGap, getRecommendations } from '../../services/api';
+import { calculateCRS } from '../../utils/crsCalculator';
 import { Award, CheckCircle2, AlertCircle, Building2, Sparkles, ShieldCheck } from 'lucide-react';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const { user } = useAuth();
-  
-  // Dashboard states
-  const [crsData, setCrsData] = useState(null);
+
+  // Derive CRS directly from user profile using the shared calculator
+  const storedUser = (() => {
+    try {
+      const auth = localStorage.getItem('auth');
+      return auth ? JSON.parse(auth).user : null;
+    } catch { return null; }
+  })();
+  const profile = user || storedUser || {};
+  const crsData = calculateCRS(profile);
+
   const [skillGapData, setSkillGapData] = useState(null);
   const [recommendedCompanies, setRecommendedCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,16 +28,11 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        // Execute fetches in parallel
-        const [crsRes, gapRes, recRes] = await Promise.all([
-          getCRS(),
+        const [gapRes, recRes] = await Promise.all([
           getSkillGap(),
           getRecommendations()
         ]);
 
-        if (crsRes.data && crsRes.data.success) {
-          setCrsData(crsRes.data.data);
-        }
         if (gapRes.data && gapRes.data.success) {
           setSkillGapData(gapRes.data.data);
         }
@@ -37,12 +41,7 @@ const Dashboard = () => {
         }
       } catch (err) {
         console.error('Error fetching dashboard data:', err);
-        setError('Failed to load dashboard metrics. Using visual fallbacks.');
-        // Set mock fallbacks in case local API endpoints are stubs or missing data
-        setCrsData({
-          overall: 65,
-          breakdown: { skills: 60, academic: 85, projects: 50, certifications: 40, resume: 100 }
-        });
+        setError('Failed to load some dashboard metrics. Using visual fallbacks.');
         setSkillGapData({
           matched: ['Programming', 'Database'],
           missing: ['AI', 'Cloud', 'Soft Skills'],
@@ -65,7 +64,7 @@ const Dashboard = () => {
   // SVG Circular Ring calculation
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
-  const overallScore = crsData?.overall || 0;
+  const overallScore = crsData.overall;
   const strokeDashoffset = circumference - (overallScore / 100) * circumference;
 
   if (loading) {
@@ -83,9 +82,9 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {/* Header */}
       <header className="dashboard-header">
-        <h1 className="dashboard-welcome">Welcome back, {user?.name || 'Explorer'}!</h1>
+        <h1 className="dashboard-welcome">Welcome back, {profile.name || 'Explorer'}!</h1>
         <p className="dashboard-subtitle">
-          Target Goal: <span style={{ color: 'var(--accent-secondary)', fontWeight: 600 }}>{user?.dreamJob || 'Software Engineer'}</span> at <span style={{ color: 'var(--accent-secondary)', fontWeight: 600 }}>{user?.dreamCompany || 'Google'}</span>
+          Target Goal: <span style={{ color: 'var(--accent-secondary)', fontWeight: 600 }}>{profile.dreamJob || 'Software Engineer'}</span> at <span style={{ color: 'var(--accent-secondary)', fontWeight: 600 }}>{profile.dreamCompany || 'Google'}</span>
         </p>
       </header>
 
@@ -98,32 +97,32 @@ const Dashboard = () => {
 
       {/* Main Grid */}
       <div className="dashboard-grid">
-        
+
         {/* Left Card: Career Readiness Score */}
         <Card glow title="Career Readiness Score">
           <div className="crs-card-content">
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Overall readiness based on your profile alignment</p>
-            
+
             <div className="circle-chart-container">
               <svg width="160" height="160">
-                <circle 
-                  className="circle-chart-bg" 
-                  cx="80" 
-                  cy="80" 
-                  r={radius} 
+                <circle
+                  className="circle-chart-bg"
+                  cx="80"
+                  cy="80"
+                  r={radius}
                 />
-                <circle 
-                  className="circle-chart-fill" 
-                  cx="80" 
-                  cy="80" 
-                  r={radius} 
+                <circle
+                  className="circle-chart-fill"
+                  cx="80"
+                  cy="80"
+                  r={radius}
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   transform="rotate(-90 80 80)"
                 />
               </svg>
               <div className="circle-chart-text-group">
-                <span className="circle-chart-percent">{Math.round(overallScore)}%</span>
+                <span className="circle-chart-percent">{overallScore}%</span>
                 <span className="circle-chart-label">Readiness</span>
               </div>
             </div>
@@ -132,19 +131,19 @@ const Dashboard = () => {
             <div className="crs-breakdown-list">
               <div className="crs-breakdown-item">
                 <span className="crs-item-label">Skills Score</span>
-                <span className="crs-item-score">{crsData?.breakdown?.skills || 0}/100</span>
+                <span className="crs-item-score">{crsData.breakdown.skills}/100</span>
               </div>
               <div className="crs-breakdown-item">
                 <span className="crs-item-label">Academic Profile (CGPA)</span>
-                <span className="crs-item-score">{crsData?.breakdown?.academic || 0}/100</span>
+                <span className="crs-item-score">{crsData.breakdown.academic}/100</span>
               </div>
               <div className="crs-breakdown-item">
                 <span className="crs-item-label">Projects Evaluation</span>
-                <span className="crs-item-score">{crsData?.breakdown?.projects || 0}/100</span>
+                <span className="crs-item-score">{crsData.breakdown.projects}/100</span>
               </div>
               <div className="crs-breakdown-item">
                 <span className="crs-item-label">Certifications Profile</span>
-                <span className="crs-item-score">{crsData?.breakdown?.certifications || 0}/100</span>
+                <span className="crs-item-score">{crsData.breakdown.certifications}/100</span>
               </div>
             </div>
           </div>
@@ -159,9 +158,9 @@ const Dashboard = () => {
                 {Math.round(skillGapData?.matchPercentage || 0)}%
               </span>
             </div>
-            
+
             <div className="gap-bar-bg">
-              <div 
+              <div
                 className="gap-bar-fill"
                 style={{ width: `${skillGapData?.matchPercentage || 0}%` }}
               ></div>
@@ -213,15 +212,15 @@ const Dashboard = () => {
             </p>
             <div className="companies-list-grid">
               {recommendedCompanies.map((company) => {
-                const logoUrl = company.companyName 
-                  ? `https://logo.clearbit.com/${company.companyName.toLowerCase().replace(/\s+/g, '')}.com` 
+                const logoUrl = company.companyName
+                  ? `https://logo.clearbit.com/${company.companyName.toLowerCase().replace(/\s+/g, '')}.com`
                   : '';
-                  
+
                 return (
                   <div key={company._id} className="company-item-card">
                     <div className="company-item-logo-box">
-                      <img 
-                        src={logoUrl} 
+                      <img
+                        src={logoUrl}
                         alt={company.companyName}
                         className="company-item-logo-img"
                         onError={(e) => {
