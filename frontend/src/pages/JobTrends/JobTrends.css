@@ -1,0 +1,252 @@
+/* Job Trends Page Styles */
+.jobtrends-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header & Filters */
+.jt-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.jt-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+.jt-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+.jt-filters {
+  display: flex;
+  gap: 1rem;
+}
+.jt-select {
+  background: #13132A;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  min-width: 160px;
+}
+.jt-select:focus {
+  border-color: #7C3AED;
+}
+
+/* Section 1 - Overview Cards */
+.jt-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+.jt-overview-card {
+  background: #13132A;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.jt-oc-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.jt-oc-icon.green { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.jt-oc-icon.red { background: rgba(239, 68, 68, 0.15); color: #EF4444; }
+.jt-oc-icon.violet { background: rgba(124, 58, 237, 0.15); color: #A855F7; }
+.jt-oc-content {
+  display: flex;
+  flex-direction: column;
+}
+.jt-oc-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+.jt-oc-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Section 2 - Trending Skills */
+.jt-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.jt-skills-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 768px) {
+  .jt-skills-columns { grid-template-columns: 1fr; }
+}
+.jt-skills-card {
+  background: #13132A;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.jt-skills-card.green { border: 1px solid rgba(16, 185, 129, 0.3); }
+.jt-skills-card.red { border: 1px solid rgba(239, 68, 68, 0.3); }
+
+.jt-skill-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.jt-skill-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.jt-skill-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.jt-skill-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+.jt-skill-badges {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.jt-skill-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.jt-skill-badge.high { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.jt-skill-badge.growing { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.jt-skill-badge.declining { background: rgba(239, 68, 68, 0.15); color: #EF4444; }
+.jt-skill-badge.low { background: rgba(239, 68, 68, 0.15); color: #EF4444; }
+
+.jt-skill-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+.jt-skill-growth {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.jt-skill-growth.green { color: #10B981; }
+.jt-skill-growth.red { color: #EF4444; }
+.jt-skill-bar-bg {
+  width: 80px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+.jt-skill-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+.jt-skill-bar-fill.green { background: #10B981; }
+.jt-skill-bar-fill.red { background: #EF4444; }
+
+/* Grid for bottom 3 sections */
+.jt-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.jt-full-width {
+  grid-column: 1 / -1;
+}
+
+/* AI Impact Card */
+.ai-impact-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(19, 19, 42, 0.8) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.ai-impact-score {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  margin-bottom: 1rem;
+}
+.ai-list {
+  margin: 0 0 1rem 0;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.ai-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* Role Outlook Card */
+.role-outlook-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(19, 19, 42, 0.8) 100%);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.ro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.ro-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.ro-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.ro-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.ro-value.violet { color: #A855F7; }
+
+/* Salary Card */
+.salary-card {
+  background: #13132A;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  height: 350px;
+}

@@ -370,7 +370,7 @@ const Landing = () => {
                         title={company.companyName}
                         onMouseEnter={() => setActiveCompanyHover(company)}
                         onMouseLeave={() => setActiveCompanyHover(null)}
-                        onClick={() => navigate('/auth')}
+                        onClick={() => navigate('/login')}
                       >
                         <img 
                           src={company.logo} 
@@ -516,7 +516,7 @@ const Landing = () => {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-          <Button size="lg" variant="primary" onClick={() => navigate('/auth')}>
+          <Button size="lg" variant="primary" onClick={() => navigate('/signup')}>
             Begin Your Career Onboarding
           </Button>
         </div>

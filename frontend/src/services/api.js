@@ -16,7 +16,10 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('auth');
-      window.location.href = '/auth';
+      // Only redirect to login if we're not on landing or signup
+      if (window.location.pathname !== '/' && window.location.pathname !== '/signup') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

@@ -32,7 +32,7 @@ const Sidebar = () => {
     { name: 'Career Roadmap', path: '/roadmap', icon: <Map size={20} /> },
     { name: 'Career Readiness', path: '/readiness', icon: <Target size={20} /> },
     { name: 'Skill Gap', path: '/skill-gap', icon: <TrendingUp size={20} /> },
-    { name: 'Company Intelligence', path: '/companies', icon: <Building2 size={20} /> },
+    { name: 'Company Intelligence', path: '/company-intelligence', icon: <Building2 size={20} /> },
     { name: 'Job Trend Analysis', path: '/job-trends', icon: <Briefcase size={20} /> },
     { name: 'Projects', path: '/projects', icon: <FolderGit2 size={20} /> },
     { name: 'Certifications', path: '/certifications', icon: <Award size={20} /> },

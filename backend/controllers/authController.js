@@ -51,6 +51,13 @@ const signup = async (req, res) => {
     });
 
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Username already taken. Please choose a different username.'
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: error.message

@@ -21,6 +21,8 @@ import News from './pages/News';
 import AIMentor from './pages/AIMentor';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Projects from './pages/Projects';
+import Certifications from './pages/Certifications';
 
 const PublicLayout = ({ children }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -63,10 +65,10 @@ const AppRoutes = () => {
       <Route path="/roadmap" element={<ProtectedRoute><Roadmap /></ProtectedRoute>} />
       <Route path="/readiness" element={<ProtectedRoute><Readiness /></ProtectedRoute>} />
       <Route path="/skill-gap" element={<ProtectedRoute><SkillGap /></ProtectedRoute>} />
-      <Route path="/companies" element={<ProtectedRoute><CompanyIntel /></ProtectedRoute>} />
+      <Route path="/company-intelligence" element={<ProtectedRoute><CompanyIntel /></ProtectedRoute>} />
       <Route path="/job-trends" element={<ProtectedRoute><JobTrends /></ProtectedRoute>} />
-      <Route path="/projects" element={<ProtectedRoute><div><h1>Projects</h1><p>Coming Soon</p></div></ProtectedRoute>} />
-      <Route path="/certifications" element={<ProtectedRoute><div><h1>Certifications</h1><p>Coming Soon</p></div></ProtectedRoute>} />
+      <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+      <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
       <Route path="/news" element={<ProtectedRoute><News /></ProtectedRoute>} />
       <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
