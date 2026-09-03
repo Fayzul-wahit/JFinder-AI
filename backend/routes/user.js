@@ -6,7 +6,8 @@ const { protect } = require('../middleware/authMiddleware');
 router.route('/profile')
   .get(protect, getProfile)
   .put(protect, updateProfile)
-  .post(protect, updateProfile);
+  .post(protect, updateProfile)
+  .delete(protect, deleteAccount);
 router.post('/resume', protect, uploadResume);
 router.delete('/', protect, deleteAccount);
 
