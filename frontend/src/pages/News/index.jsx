@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Badge } from "../../components/common";
 import { useAuth } from "../../hooks/useAuth";
 import { getNews, getTrends, getCompanies } from "../../services/api";
@@ -183,7 +183,7 @@ const News = () => {
       </div>
 
       {/* Two-column layout */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: "2rem", alignItems: "start" }}>
+      <div className="news-layout-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: "2rem", alignItems: "start" }}>
 
         {/* LEFT — News Feed */}
         <div>

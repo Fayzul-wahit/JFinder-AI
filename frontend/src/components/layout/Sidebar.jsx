@@ -1,12 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Map, Target, TrendingUp, Building2, Briefcase, FolderGit2, Award, Newspaper, User, Settings } from 'lucide-react';
+import { LayoutDashboard, Map, Target, TrendingUp, Building2, Briefcase, FolderGit2, Award, Newspaper, User, Settings, X, Brain } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
-const Sidebar = () => {
+const Sidebar = ({ mobileOpen, onClose }) => {
   const { user } = useAuth();
 
-  // Read user from context, fall back to localStorage
   const storedUser = (() => {
     try {
       const auth = localStorage.getItem('auth');
@@ -15,18 +14,6 @@ const Sidebar = () => {
   })();
   const currentUser = user || storedUser;
 
-  const sidebarStyle = {
-    width: '260px',
-    height: '100vh',
-    background: 'var(--bg-secondary)',
-    borderRight: '1px solid var(--border-color)',
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'sticky',
-    top: 0
-  };
-
-  // AI Mentor removed — it lives as a floating button on all pages
   const menuItems = [
     { name: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} /> },
     { name: 'Career Roadmap', path: '/roadmap', icon: <Map size={20} /> },
@@ -36,68 +23,73 @@ const Sidebar = () => {
     { name: 'Job Trend Analysis', path: '/job-trends', icon: <Briefcase size={20} /> },
     { name: 'Projects', path: '/projects', icon: <FolderGit2 size={20} /> },
     { name: 'Certifications', path: '/certifications', icon: <Award size={20} /> },
+    { name: 'Practice', path: '/practice', icon: <Brain size={20} /> },
     { name: 'Industry News', path: '/news', icon: <Newspaper size={20} /> },
     { name: 'Profile', path: '/profile', icon: <User size={20} /> },
     { name: 'Settings', path: '/settings', icon: <Settings size={20} /> },
   ];
 
   return (
-    <aside style={sidebarStyle}>
-      {/* Brand Logo */}
-      <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ background: 'var(--accent-primary)', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white', fontSize: '0.875rem' }}>
-          JF
-        </div>
-        <span style={{ fontWeight: 'bold', fontSize: '1.125rem', color: 'white' }}>JFinder <span style={{ color: 'var(--accent-primary)' }}>AI</span></span>
-      </div>
+    <>
+      {/* Backdrop overlay for mobile screen */}
+      {mobileOpen && (
+        <div 
+          className="sidebar-backdrop"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Nav Links */}
-      <nav style={{ flex: 1, padding: '1rem 0', overflowY: 'auto' }}>
-        {menuItems.map(item => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            style={({ isActive }) => ({
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              padding: '0.75rem 1.5rem',
-              color: isActive ? 'white' : 'var(--text-secondary)',
-              background: isActive ? 'var(--accent-primary)' : 'transparent',
-              textDecoration: 'none',
-              transition: 'all 0.2s'
-            })}
-          >
-            {item.icon}
-            {item.name}
-          </NavLink>
-        ))}
-      </nav>
-
-      {/* User Info — real data from auth context / localStorage */}
-      <div style={{ padding: '1rem', borderTop: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        {/* Avatar initial */}
-        <div style={{
-          width: '40px', height: '40px', borderRadius: '50%',
-          background: 'var(--accent-primary)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontWeight: 700, color: 'white', fontSize: '1rem', flexShrink: 0
-        }}>
-          {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <User size={20} />}
-        </div>
-
-        <div style={{ overflow: 'hidden' }}>
-          {/* Display name */}
-          <div style={{ color: 'white', fontSize: '0.875rem', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {currentUser?.name || 'User'}
+      <aside className={`sidebar-container ${mobileOpen ? 'open' : ''}`}>
+        {/* Brand Logo & Mobile Close Button */}
+        <div className="sidebar-header">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ background: 'var(--accent-primary)', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white', fontSize: '0.875rem', flexShrink: 0 }}>
+              JF
+            </div>
+            <span className="sidebar-brand-text">
+              JFinder <span style={{ color: 'var(--accent-primary)' }}>AI</span>
+            </span>
           </div>
-          {/* @username — no email in this project */}
-          <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            @{currentUser?.username || 'username'}
+
+          {/* Close button on mobile sidebar overlay */}
+          <button className="sidebar-mobile-close" onClick={onClose} aria-label="Close sidebar">
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="sidebar-nav">
+          {menuItems.map(item => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              onClick={onClose}
+              title={item.name}
+              className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>{item.icon}</span>
+              <span className="sidebar-text">{item.name}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* User Info Footer */}
+        <div className="sidebar-user-footer">
+          <div className="sidebar-user-avatar">
+            {currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : <User size={18} />}
+          </div>
+
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-name">
+              {currentUser?.name || 'User'}
+            </div>
+            <div className="sidebar-user-username">
+              @{currentUser?.username || 'username'}
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
-import React from 'react';
+﻿import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { UserProvider } from './context/UserContext';
 import { Navbar, Sidebar, Footer } from './components/layout';
 import AIMentorFloat from './components/common/AIMentorFloat';
 import { useAuth } from './hooks/useAuth';
+import { Menu } from 'lucide-react';
 
 // Pages
 import Landing from './pages/Landing';
@@ -23,6 +24,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Projects from './pages/Projects';
 import Certifications from './pages/Certifications';
+import Practice from './pages/Practice';
 
 const PublicLayout = ({ children }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -33,17 +35,40 @@ const PublicLayout = ({ children }) => (
 );
 
 // DashboardLayout includes the floating AI Mentor on every authenticated page
-const DashboardLayout = ({ children }) => (
-  <div style={{ display: 'flex', minHeight: '100vh' }}>
-    <Sidebar />
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-      <Navbar isAuthenticated={true} />
-      <main style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>{children}</main>
+const DashboardLayout = ({ children }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { logout } = useAuth();
+
+  return (
+    <div className="dashboard-layout">
+      <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="dashboard-main-wrapper">
+        {/* Mobile Dashboard Topbar with Hamburger Trigger for Sidebar */}
+        <div className="dashboard-mobile-topbar">
+          <button 
+            className="mobile-sidebar-trigger"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open dashboard navigation menu"
+          >
+            <Menu size={20} color="#fff" />
+            <span>Dashboard Navigation</span>
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ background: 'var(--accent-primary)', width: '28px', height: '28px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white', fontSize: '0.75rem' }}>
+              JF
+            </div>
+            <span style={{ fontWeight: 'bold', fontSize: '0.9rem', color: 'white' }}>JFinder AI</span>
+          </div>
+        </div>
+
+        <Navbar isAuthenticated={true} onLogout={logout} />
+        <main className="dashboard-content">{children}</main>
+      </div>
+      {/* Floating AI Mentor — visible on ALL authenticated pages */}
+      <AIMentorFloat />
     </div>
-    {/* Floating AI Mentor — visible on ALL authenticated pages */}
-    <AIMentorFloat />
-  </div>
-);
+  );
+};
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -69,6 +94,7 @@ const AppRoutes = () => {
       <Route path="/job-trends" element={<ProtectedRoute><JobTrends /></ProtectedRoute>} />
       <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
       <Route path="/certifications" element={<ProtectedRoute><Certifications /></ProtectedRoute>} />
+      <Route path="/practice" element={<ProtectedRoute><Practice /></ProtectedRoute>} />
       <Route path="/news" element={<ProtectedRoute><News /></ProtectedRoute>} />
       <Route path="/ai-mentor" element={<ProtectedRoute><AIMentor /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
