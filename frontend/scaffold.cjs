@@ -756,7 +756,7 @@ export const useCRS = () => {
   "src/services/api.js": `import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_API_URL || 'https://jfinder-backend.onrender.com',
 });
 
 api.interceptors.request.use(config => {
@@ -794,7 +794,7 @@ export const sendMentorMessage = (message) => api.post('/api/ai-mentor/chat', { 
   "src/services/auth.js": `import { api } from './api';
 
 export const initiateGoogleLogin = () => {
-  window.location.href = \`\${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/google\`;
+  window.location.href = \`\${import.meta.env.VITE_API_URL || 'https://jfinder-backend.onrender.com'}/api/auth/google\`;
 };
 
 export const logout = () => api.post('/api/auth/logout');
@@ -1179,7 +1179,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 `,
 
-  ".env": `VITE_API_URL=http://localhost:5000
+  ".env": `VITE_API_URL=https://jfinder-backend.onrender.com
 VITE_GOOGLE_CLIENT_ID=your_google_client_id
 `
 };
